@@ -3,6 +3,9 @@ namespace ClinicaVeterinaria.Models
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    [Table("Especie", Schema = "CV")]
 
     public partial class Especie
     {

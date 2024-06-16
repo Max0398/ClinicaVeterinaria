@@ -1,0 +1,3 @@
+﻿dotnet tool install --global dotnet-ef  //instalar si no esta instalado
+dotnet ef migrations add Nombre_de_la_Migracion --context ClinicaContainer //Agrega la migracion
+dotnet ef database update --context ClinicaContainer //Actualiza la base de datos con la migracion

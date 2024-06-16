@@ -1,0 +1,42 @@
+﻿@model ClinicaVeterinaria.Models.Cliente
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="card">
+    <div class="card-header">
+        Detalles del Cliente
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">@Html.DisplayFor(model => model.Nombres) @Html.DisplayFor(model => model.Apellidos1)</h5>
+        <h6 class="card-subtitle mb-2 text-muted">@Html.DisplayFor(model => model.Correo)</h6>
+
+        <dl class="row mt-3">
+            <dt class="col-sm-3">Nombres:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Nombres)</dd>
+
+            <dt class="col-sm-3">Apellidos:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Apellidos1) @Html.DisplayFor(model => model.Apellidos2)</dd>
+
+            <dt class="col-sm-3">Dirección:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Direccion)</dd>
+
+            <dt class="col-sm-3">Teléfono:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Telefono)</dd>
+
+            <dt class="col-sm-3">Correo:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.Correo)</dd>
+
+            <dt class="col-sm-3">N. Identificación:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.N_Identificacion)</dd>
+
+            <dt class="col-sm-3">Código Cliente:</dt>
+            <dd class="col-sm-9">@Html.DisplayFor(model => model.CodigoCliente)</dd>
+        </dl>
+    </div>
+    <div class="card-footer text-muted">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Editar</a>
+        <a asp-action="Index" class="btn btn-secondary">Volver al Listado</a>
+    </div>
+</div>

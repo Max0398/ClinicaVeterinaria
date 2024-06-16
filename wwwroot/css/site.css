@@ -20,3 +20,14 @@ html {
 body {
   margin-bottom: 60px;
 }
+/* Estilo para las filas de la tabla */
+.custom-table-row {
+    border: 1px solid #dee2e6; /* Color del borde */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+    transition: box-shadow 0.3s ease; /* Transición suave para la sombra */
+}
+
+    /* Estilo al pasar el ratón sobre la fila */
+    .custom-table-row:hover {
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3); /* Aumentamos la sombra al pasar el ratón */
+    }

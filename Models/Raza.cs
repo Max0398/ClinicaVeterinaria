@@ -4,7 +4,9 @@ namespace ClinicaVeterinaria.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
+    [Table("Raza", Schema = "CV")]
     public partial class Raza
     {
         public Raza()

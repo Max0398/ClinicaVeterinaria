@@ -5,7 +5,7 @@ using ClinicaVeterinaria.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-public partial class ClinicaContainer : DbContext
+public  class ClinicaContainer : DbContext
 {
     public ClinicaContainer(DbContextOptions<ClinicaContainer> options)
         : base(options)

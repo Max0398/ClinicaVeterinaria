@@ -4,6 +4,9 @@ namespace ClinicaVeterinaria.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    [Table("DetalleConsulta", Schema = "CV")]
 
     public partial class DetalleConsulta
     {

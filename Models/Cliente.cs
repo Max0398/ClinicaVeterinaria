@@ -5,6 +5,9 @@ namespace ClinicaVeterinaria.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    [Table("Cliente", Schema = "CV")]
 
     public partial class Cliente
     {
@@ -44,7 +47,7 @@ namespace ClinicaVeterinaria.Models
 
         [Required(ErrorMessage = "Campo Necesario")]
         [Display(Name = "Correo Electrónico")]
-        [StringLength(20, ErrorMessage = "El campo Correo Electrónico no puede tener más de 20 caracteres.")]
+        [StringLength(40, ErrorMessage = "El campo Correo Electrónico no puede tener más de 40 caracteres.")]
         [EmailAddress(ErrorMessage = "El campo Correo Electrónico no tiene un formato válido.")]
         public string? Correo { get; set; }
 

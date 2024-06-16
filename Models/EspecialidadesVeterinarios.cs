@@ -2,7 +2,9 @@
 namespace ClinicaVeterinaria.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
+    [Table("EspecialidadVeterinario", Schema = "CV")]
     public partial class EspecialidadesVeterinarios
     {
         [Key]

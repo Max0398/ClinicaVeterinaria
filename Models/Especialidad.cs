@@ -3,6 +3,10 @@ namespace ClinicaVeterinaria.Models
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Xml.Serialization;
+
+    [Table("Especialidad", Schema= "CV")]
 
     public partial class Especialidad
     {
@@ -11,6 +15,8 @@ namespace ClinicaVeterinaria.Models
         {
             this.EspecialidadesVeterinarios = new HashSet<EspecialidadesVeterinarios>();
         }
+        [Key]
+        public int id { get; set; }
 
         [Required(ErrorMessage = "Campo Necesario")]
         [Display(Name = "Código de Especialidad")]
