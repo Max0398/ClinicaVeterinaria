@@ -7,9 +7,9 @@ namespace ClinicaVeterinaria.Models
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("Medicamento", Schema = "CV")]
-    public partial class Medicamentos
+    public partial class Medicamento
     {
-        public Medicamentos()
+        public Medicamento()
         {
             this.DetalleConsulta = new HashSet<DetalleConsulta>();
         }
@@ -18,9 +18,9 @@ namespace ClinicaVeterinaria.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Campo Necesario")]
-        [Display(Name = "Código de Vacuna")]
+        [Display(Name = "Código de Medicamento")]
         [StringLength(5, ErrorMessage = "El campo Código de Vacuna debe tener exactamente 5 caracteres.")]
-        public string? CodigoVacuna { get; set; }
+        public string? CodigoMedicamento { get; set; }
 
         [Required(ErrorMessage = "Campo Necesario")]
         [Display(Name = "Descripción")]

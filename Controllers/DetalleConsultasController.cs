@@ -22,7 +22,7 @@ namespace ClinicaVeterinaria.Controllers
         // GET: DetalleConsultas
         public async Task<IActionResult> Index()
         {
-            var clinicaContainer = _context.DetalleConsultaSet.Include(d => d.Consulta);
+            var clinicaContainer = _context.DetalleConsultaSet.Include(d => d.Consulta).Include(d => d.Medicamento);
             return View(await clinicaContainer.ToListAsync());
         }
 
@@ -36,6 +36,7 @@ namespace ClinicaVeterinaria.Controllers
 
             var detalleConsulta = await _context.DetalleConsultaSet
                 .Include(d => d.Consulta)
+                .Include(d => d.Medicamento)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (detalleConsulta == null)
             {
@@ -48,13 +49,12 @@ namespace ClinicaVeterinaria.Controllers
         // GET: DetalleConsultas/Create
         public IActionResult Create()
         {
-            ViewData["ConsultaId"] = new SelectList(_context.ConsultaSet, "Id", "CodigoConsulta");
+            ViewBag.ConsultaId = new SelectList(_context.ConsultaSet, "Id", "CodigoConsulta");
+            ViewBag.MedicamentoId = new SelectList(_context.MedicamentoSet, "Id", "CodigoMedicamento");
             return View();
         }
 
         // POST: DetalleConsultas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,ConsultaId,Aplicacion,MedicamentoId,Cantidad")] DetalleConsulta detalleConsulta)
@@ -65,7 +65,8 @@ namespace ClinicaVeterinaria.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ConsultaId"] = new SelectList(_context.ConsultaSet, "Id", "CodigoConsulta", detalleConsulta.ConsultaId);
+            ViewBag.ConsultaId = new SelectList(_context.ConsultaSet, "Id", "CodigoConsulta", detalleConsulta.ConsultaId);
+            ViewBag.MedicamentoId = new SelectList(_context.MedicamentoSet, "Id", "CodigoMedicamento", detalleConsulta.MedicamentoId);
             return View(detalleConsulta);
         }
 
@@ -82,13 +83,17 @@ namespace ClinicaVeterinaria.Controllers
             {
                 return NotFound();
             }
-            ViewData["ConsultaId"] = new SelectList(_context.ConsultaSet, "Id", "CodigoConsulta", detalleConsulta.ConsultaId);
+
+            // Configurar ConsultaId con SelectList
+            ViewBag.ConsultaId = new SelectList(_context.ConsultaSet, "Id", "CodigoConsulta", detalleConsulta.ConsultaId);
+
+            // Configurar MedicamentoId con SelectList
+            ViewBag.MedicamentoId = new SelectList(_context.MedicamentoSet, "Id", "CodigoMedicamento", detalleConsulta.MedicamentoId);
+
             return View(detalleConsulta);
         }
 
         // POST: DetalleConsultas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,ConsultaId,Aplicacion,MedicamentoId,Cantidad")] DetalleConsulta detalleConsulta)
@@ -118,7 +123,11 @@ namespace ClinicaVeterinaria.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ConsultaId"] = new SelectList(_context.ConsultaSet, "Id", "CodigoConsulta", detalleConsulta.ConsultaId);
+
+            // Si el modelo no es válido, volver a configurar los SelectList
+            ViewBag.ConsultaId = new SelectList(_context.ConsultaSet, "Id", "CodigoConsulta", detalleConsulta.ConsultaId);
+            ViewBag.MedicamentoId = new SelectList(_context.MedicamentoSet, "Id", "CodigoMedicamento", detalleConsulta.MedicamentoId);
+
             return View(detalleConsulta);
         }
 
@@ -132,6 +141,7 @@ namespace ClinicaVeterinaria.Controllers
 
             var detalleConsulta = await _context.DetalleConsultaSet
                 .Include(d => d.Consulta)
+                .Include(d => d.Medicamento)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (detalleConsulta == null)
             {

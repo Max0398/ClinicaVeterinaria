@@ -1,0 +1,44 @@
+body {
+    padding-top: 56px; /* Ajusta el padding-top para dejar espacio al navbar fijo */
+}
+
+.navbar-brand {
+    font-size: 1.5rem; /* Tamaño de fuente del logo */
+    font-weight: bold; /* Peso de la fuente */
+}
+
+.navbar-nav {
+    text-align: center; /* Centra los elementos del menú */
+    width: 100%;
+}
+
+    .navbar-nav .nav-item {
+        margin-bottom: 5px; /* Espacio entre los elementos del menú */
+    }
+
+    .navbar-nav .nav-link {
+        padding: .5rem 1rem; /* Espaciado interno de los enlaces del menú */
+        color: rgba(255, 255, 255, 0.9); /* Color del texto */
+        transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out; /* Transición suave */
+    }
+
+        .navbar-nav .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Color de fondo al pasar el mouse */
+            color: white; /* Color del texto al pasar el mouse */
+        }
+
+.dropdown-menu {
+    background-color: #343a40; /* Color de fondo del dropdown */
+    border: none; /* Sin borde */
+}
+
+.dropdown-item {
+    color: white; /* Color del texto */
+}
+
+    .dropdown-item:hover {
+        background-color: #495057; /* Color de fondo al pasar el mouse */
+        color: white; /* Color del texto al pasar el mouse */
+    }
+
+

@@ -1,41 +1,51 @@
 ﻿@model IEnumerable<ClinicaVeterinaria.Models.Colores>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Listado de Colores";
 }
 
-<h1>Index</h1>
+<h1>Listado de Colores</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
 </p>
-<table class="table">
+
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CodigoColor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.CodigoColor)</th>
+            <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodigoColor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr class="custom-table-row">
+                <td>@Html.DisplayFor(modelItem => item.CodigoColor)</td>
+                <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <!-- Botón para Editar -->
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info" title="Editar">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <!-- Botón para Detalles (Details) -->
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary" title="Detalles">
+                            <i class="bi bi-info-square"></i> Detalles
+                        </a>
+                        <!-- Botón para Eliminar -->
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" title="Eliminar">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@section Scripts {
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap-icons/font/bootstrap-icons.js"></script>
+}

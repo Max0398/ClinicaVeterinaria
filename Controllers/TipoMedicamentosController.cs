@@ -19,13 +19,13 @@ namespace ClinicaVeterinaria.Controllers
             _context = context;
         }
 
-        // GET: TipoMedicamentoes
+        // GET: TipoMedicamentos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TipoMedicamentoSet.ToListAsync());
+            return View(await _context.TipoMedicamentoet.ToListAsync());
         }
 
-        // GET: TipoMedicamentoes/Details/5
+        // GET: TipoMedicamentos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,7 +33,7 @@ namespace ClinicaVeterinaria.Controllers
                 return NotFound();
             }
 
-            var tipoMedicamento = await _context.TipoMedicamentoSet
+            var tipoMedicamento = await _context.TipoMedicamentoet
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tipoMedicamento == null)
             {
@@ -43,13 +43,13 @@ namespace ClinicaVeterinaria.Controllers
             return View(tipoMedicamento);
         }
 
-        // GET: TipoMedicamentoes/Create
+        // GET: TipoMedicamentos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: TipoMedicamentoes/Create
+        // POST: TipoMedicamentos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -65,7 +65,7 @@ namespace ClinicaVeterinaria.Controllers
             return View(tipoMedicamento);
         }
 
-        // GET: TipoMedicamentoes/Edit/5
+        // GET: TipoMedicamentos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,7 +73,7 @@ namespace ClinicaVeterinaria.Controllers
                 return NotFound();
             }
 
-            var tipoMedicamento = await _context.TipoMedicamentoSet.FindAsync(id);
+            var tipoMedicamento = await _context.TipoMedicamentoet.FindAsync(id);
             if (tipoMedicamento == null)
             {
                 return NotFound();
@@ -81,7 +81,7 @@ namespace ClinicaVeterinaria.Controllers
             return View(tipoMedicamento);
         }
 
-        // POST: TipoMedicamentoes/Edit/5
+        // POST: TipoMedicamentos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -116,7 +116,7 @@ namespace ClinicaVeterinaria.Controllers
             return View(tipoMedicamento);
         }
 
-        // GET: TipoMedicamentoes/Delete/5
+        // GET: TipoMedicamentos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,7 +124,7 @@ namespace ClinicaVeterinaria.Controllers
                 return NotFound();
             }
 
-            var tipoMedicamento = await _context.TipoMedicamentoSet
+            var tipoMedicamento = await _context.TipoMedicamentoet
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tipoMedicamento == null)
             {
@@ -134,15 +134,15 @@ namespace ClinicaVeterinaria.Controllers
             return View(tipoMedicamento);
         }
 
-        // POST: TipoMedicamentoes/Delete/5
+        // POST: TipoMedicamentos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tipoMedicamento = await _context.TipoMedicamentoSet.FindAsync(id);
+            var tipoMedicamento = await _context.TipoMedicamentoet.FindAsync(id);
             if (tipoMedicamento != null)
             {
-                _context.TipoMedicamentoSet.Remove(tipoMedicamento);
+                _context.TipoMedicamentoet.Remove(tipoMedicamento);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace ClinicaVeterinaria.Controllers
 
         private bool TipoMedicamentoExists(int id)
         {
-            return _context.TipoMedicamentoSet.Any(e => e.Id == id);
+            return _context.TipoMedicamentoet.Any(e => e.Id == id);
         }
     }
 }

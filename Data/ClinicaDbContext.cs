@@ -18,7 +18,7 @@ public  class ClinicaContainer : DbContext
     public virtual DbSet<Especie> EspecieSet { get; set; }
     public virtual DbSet<Raza> RazaSet { get; set; }
     public virtual DbSet<Colores> ColoresSet { get; set; }
-    public virtual DbSet<Medicamentos> MedicamentosSet { get; set; }
+    public virtual DbSet<Medicamento> MedicamentoSet { get; set; }
     public virtual DbSet<Consulta> ConsultaSet { get; set; }
     public virtual DbSet<Veterinario> VeterinarioSet { get; set; }
     public virtual DbSet<Especialidad> EspecialidadSet { get; set; }
@@ -26,5 +26,5 @@ public  class ClinicaContainer : DbContext
     public virtual DbSet<EspecialidadesVeterinarios> EspecialidadesVeterinariosSet { get; set; }
     public virtual DbSet<DetalleConsulta> DetalleConsultaSet { get; set; }
     public virtual DbSet<MascotaColores> MascotaColoresSet { get; set; }
-    public virtual DbSet<TipoMedicamento> TipoMedicamentoSet { get; set; }
+    public virtual DbSet<TipoMedicamento> TipoMedicamentoet { get; set; }
 }

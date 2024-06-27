@@ -22,7 +22,7 @@ namespace ClinicaVeterinaria.Controllers
         // GET: Medicamentos
         public async Task<IActionResult> Index()
         {
-            var clinicaContainer = _context.MedicamentosSet.Include(m => m.TipoMedicamento);
+            var clinicaContainer = _context.MedicamentoSet.Include(m => m.TipoMedicamento);
             return View(await clinicaContainer.ToListAsync());
         }
 
@@ -34,21 +34,21 @@ namespace ClinicaVeterinaria.Controllers
                 return NotFound();
             }
 
-            var medicamentos = await _context.MedicamentosSet
+            var medicamento = await _context.MedicamentoSet
                 .Include(m => m.TipoMedicamento)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (medicamentos == null)
+            if (medicamento == null)
             {
                 return NotFound();
             }
 
-            return View(medicamentos);
+            return View(medicamento);
         }
 
         // GET: Medicamentos/Create
         public IActionResult Create()
         {
-            ViewData["TipoMedicamentoId"] = new SelectList(_context.TipoMedicamentoSet, "Id", "CodigoTipo");
+            ViewData["TipoMedicamentoId"] = new SelectList(_context.TipoMedicamentoet, "Id", "CodigoTipo");
             return View();
         }
 
@@ -57,16 +57,16 @@ namespace ClinicaVeterinaria.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CodigoVacuna,Descripcion,TipoMedicamentoId")] Medicamentos medicamentos)
+        public async Task<IActionResult> Create([Bind("Id,CodigoMedicamento,Descripcion,TipoMedicamentoId")] Medicamento medicamento)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(medicamentos);
+                _context.Add(medicamento);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoMedicamentoId"] = new SelectList(_context.TipoMedicamentoSet, "Id", "CodigoTipo", medicamentos.TipoMedicamentoId);
-            return View(medicamentos);
+            ViewData["TipoMedicamentoId"] = new SelectList(_context.TipoMedicamentoet, "Id", "CodigoTipo", medicamento.TipoMedicamentoId);
+            return View(medicamento);
         }
 
         // GET: Medicamentos/Edit/5
@@ -77,13 +77,13 @@ namespace ClinicaVeterinaria.Controllers
                 return NotFound();
             }
 
-            var medicamentos = await _context.MedicamentosSet.FindAsync(id);
-            if (medicamentos == null)
+            var medicamento = await _context.MedicamentoSet.FindAsync(id);
+            if (medicamento == null)
             {
                 return NotFound();
             }
-            ViewData["TipoMedicamentoId"] = new SelectList(_context.TipoMedicamentoSet, "Id", "CodigoTipo", medicamentos.TipoMedicamentoId);
-            return View(medicamentos);
+            ViewData["TipoMedicamentoId"] = new SelectList(_context.TipoMedicamentoet, "Id", "CodigoTipo", medicamento.TipoMedicamentoId);
+            return View(medicamento);
         }
 
         // POST: Medicamentos/Edit/5
@@ -91,9 +91,9 @@ namespace ClinicaVeterinaria.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CodigoVacuna,Descripcion,TipoMedicamentoId")] Medicamentos medicamentos)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CodigoMedicamento,Descripcion,TipoMedicamentoId")] Medicamento medicamento)
         {
-            if (id != medicamentos.Id)
+            if (id != medicamento.Id)
             {
                 return NotFound();
             }
@@ -102,12 +102,12 @@ namespace ClinicaVeterinaria.Controllers
             {
                 try
                 {
-                    _context.Update(medicamentos);
+                    _context.Update(medicamento);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MedicamentosExists(medicamentos.Id))
+                    if (!MedicamentoExists(medicamento.Id))
                     {
                         return NotFound();
                     }
@@ -118,8 +118,8 @@ namespace ClinicaVeterinaria.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoMedicamentoId"] = new SelectList(_context.TipoMedicamentoSet, "Id", "CodigoTipo", medicamentos.TipoMedicamentoId);
-            return View(medicamentos);
+            ViewData["TipoMedicamentoId"] = new SelectList(_context.TipoMedicamentoet, "Id", "CodigoTipo", medicamento.TipoMedicamentoId);
+            return View(medicamento);
         }
 
         // GET: Medicamentos/Delete/5
@@ -130,15 +130,15 @@ namespace ClinicaVeterinaria.Controllers
                 return NotFound();
             }
 
-            var medicamentos = await _context.MedicamentosSet
+            var medicamento = await _context.MedicamentoSet
                 .Include(m => m.TipoMedicamento)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (medicamentos == null)
+            if (medicamento == null)
             {
                 return NotFound();
             }
 
-            return View(medicamentos);
+            return View(medicamento);
         }
 
         // POST: Medicamentos/Delete/5
@@ -146,19 +146,19 @@ namespace ClinicaVeterinaria.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var medicamentos = await _context.MedicamentosSet.FindAsync(id);
-            if (medicamentos != null)
+            var medicamento = await _context.MedicamentoSet.FindAsync(id);
+            if (medicamento != null)
             {
-                _context.MedicamentosSet.Remove(medicamentos);
+                _context.MedicamentoSet.Remove(medicamento);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MedicamentosExists(int id)
+        private bool MedicamentoExists(int id)
         {
-            return _context.MedicamentosSet.Any(e => e.Id == id);
+            return _context.MedicamentoSet.Any(e => e.Id == id);
         }
     }
 }

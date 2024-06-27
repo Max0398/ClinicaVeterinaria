@@ -4,6 +4,7 @@ using ClinicaVeterinaria.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClinicaVeterinaria.Migrations
 {
     [DbContext(typeof(ClinicaContainer))]
-    partial class ClinicaContainerModelSnapshot : ModelSnapshot
+    [Migration("20240624175656_tablas")]
+    partial class tablas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,11 +172,14 @@ namespace ClinicaVeterinaria.Migrations
                     b.Property<int>("MedicamentoId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("MedicamentosId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ConsultaId");
 
-                    b.HasIndex("MedicamentoId");
+                    b.HasIndex("MedicamentosId");
 
                     b.ToTable("DetalleConsulta", "CV");
                 });
@@ -309,7 +315,7 @@ namespace ClinicaVeterinaria.Migrations
                     b.ToTable("MascotaColores", "CV");
                 });
 
-            modelBuilder.Entity("ClinicaVeterinaria.Models.Medicamento", b =>
+            modelBuilder.Entity("ClinicaVeterinaria.Models.Medicamentos", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -317,7 +323,7 @@ namespace ClinicaVeterinaria.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CodigoMedicamento")
+                    b.Property<string>("CodigoVacuna")
                         .IsRequired()
                         .HasMaxLength(5)
                         .HasColumnType("nvarchar(5)");
@@ -488,15 +494,13 @@ namespace ClinicaVeterinaria.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ClinicaVeterinaria.Models.Medicamento", "Medicamento")
+                    b.HasOne("ClinicaVeterinaria.Models.Medicamentos", "Medicamentos")
                         .WithMany("DetalleConsulta")
-                        .HasForeignKey("MedicamentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MedicamentosId");
 
                     b.Navigation("Consulta");
 
-                    b.Navigation("Medicamento");
+                    b.Navigation("Medicamentos");
                 });
 
             modelBuilder.Entity("ClinicaVeterinaria.Models.EspecialidadesVeterinarios", b =>
@@ -548,10 +552,10 @@ namespace ClinicaVeterinaria.Migrations
                     b.Navigation("Mascota");
                 });
 
-            modelBuilder.Entity("ClinicaVeterinaria.Models.Medicamento", b =>
+            modelBuilder.Entity("ClinicaVeterinaria.Models.Medicamentos", b =>
                 {
                     b.HasOne("ClinicaVeterinaria.Models.TipoMedicamento", "TipoMedicamento")
-                        .WithMany("Medicamento")
+                        .WithMany("Medicamentos")
                         .HasForeignKey("TipoMedicamentoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -612,7 +616,7 @@ namespace ClinicaVeterinaria.Migrations
                     b.Navigation("RazaMascotas");
                 });
 
-            modelBuilder.Entity("ClinicaVeterinaria.Models.Medicamento", b =>
+            modelBuilder.Entity("ClinicaVeterinaria.Models.Medicamentos", b =>
                 {
                     b.Navigation("DetalleConsulta");
                 });
@@ -624,7 +628,7 @@ namespace ClinicaVeterinaria.Migrations
 
             modelBuilder.Entity("ClinicaVeterinaria.Models.TipoMedicamento", b =>
                 {
-                    b.Navigation("Medicamento");
+                    b.Navigation("Medicamentos");
                 });
 
             modelBuilder.Entity("ClinicaVeterinaria.Models.Veterinario", b =>

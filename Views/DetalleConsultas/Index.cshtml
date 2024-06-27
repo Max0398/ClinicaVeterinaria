@@ -1,53 +1,55 @@
 ﻿@model IEnumerable<ClinicaVeterinaria.Models.DetalleConsulta>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Detalle Consultas";
 }
 
-<h1>Index</h1>
+<h1>Listado de Detalle Consultas</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
 </p>
-<table class="table">
-    <thead>
+
+<table class="table table-striped">
+    <thead class="thead-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Aplicacion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MedicamentoId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cantidad)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Consulta)
-            </th>
-            <th></th>
+            <th>Aplicación</th>
+            <th>Cantidad</th>
+            <th>Código Consulta</th>
+            <th>Medicamento</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Aplicacion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MedicamentoId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cantidad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Consulta.CodigoConsulta)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Aplicacion)</td>
+                <td>@Html.DisplayFor(modelItem => item.Cantidad)</td>
+                <td>@Html.DisplayFor(modelItem => item.Consulta.CodigoConsulta)</td>
+                <td>@Html.DisplayFor(modelItem => item.Medicamento.Descripcion)</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <!-- Botón para Detalles -->
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary" title="Detalles">
+                            <i class="bi bi-info-square"></i> Detalles
+                        </a>
+                        <!-- Botón para Editar -->
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning" title="Editar">
+                            <i class="bi bi-pencil-square"></i> Editar
+                        </a>
+                        <!-- Botón para Eliminar -->
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" title="Eliminar">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@section Scripts {
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap-icons/font/bootstrap-icons.js"></script>
+}

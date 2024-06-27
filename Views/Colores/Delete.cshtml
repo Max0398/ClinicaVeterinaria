@@ -1,33 +1,40 @@
 ﻿@model ClinicaVeterinaria.Models.Colores
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Eliminar Color";
 }
 
-<h1>Delete</h1>
+<h1 class="text-center mb-5">Eliminar Color</h1>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Colores</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CodigoColor)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CodigoColor)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-5-strong" style="background-color: #f8d7da;">
+                <div class="card-body p-5">
+                    <h4 class="card-title text-center mb-4">¿Estás seguro de querer eliminar este color?</h4>
+                    <hr />
+
+                    <dl class="row">
+                        <dt class="col-sm-3">Código de Color:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.CodigoColor)</dd>
+
+                        <dt class="col-sm-3">Descripción:</dt>
+                        <dd class="col-sm-9">@Html.DisplayFor(model => model.Descripcion)</dd>
+                    </dl>
+
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="d-grid gap-2">
+                            <input type="submit" value="Eliminar" class="btn btn-danger btn-block" style="width:150px" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Volver al Listado</a>
 </div>

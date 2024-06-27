@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,7 +20,10 @@ namespace ClinicaVeterinaria.Controllers
         // GET: Consultas
         public async Task<IActionResult> Index()
         {
-            var clinicaContainer = _context.ConsultaSet.Include(c => c.Cliente).Include(c => c.Mascota).Include(c => c.Veterinario);
+            var clinicaContainer = _context.ConsultaSet
+                .Include(c => c.Cliente)
+                .Include(c => c.Mascota)
+                .Include(c => c.Veterinario);
             return View(await clinicaContainer.ToListAsync());
         }
 
@@ -50,15 +51,13 @@ namespace ClinicaVeterinaria.Controllers
         // GET: Consultas/Create
         public IActionResult Create()
         {
-            ViewData["ClienteId"] = new SelectList(_context.ClienteSet, "Id", "Apellidos1");
-            ViewData["MascotaId"] = new SelectList(_context.MascotaSet, "Id", "CodigoMascota");
-            ViewData["VeterinarioId"] = new SelectList(_context.VeterinarioSet, "Id", "Apellidos1");
+            ViewData["ClienteId"] = new SelectList(_context.ClienteSet, "Id", "Nombres");
+            ViewData["MascotaId"] = new SelectList(_context.MascotaSet, "Id", "Nombre");
+            ViewData["VeterinarioId"] = new SelectList(_context.VeterinarioSet, "Id", "Nombres");
             return View();
         }
 
         // POST: Consultas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CodigoConsulta,FechaConsulta,DescripcionConsulta,MascotaId,FechaCita,DescripcionCita,VeterinarioId,ClienteId")] Consulta consulta)
@@ -69,9 +68,9 @@ namespace ClinicaVeterinaria.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.ClienteSet, "Id", "Apellidos1", consulta.ClienteId);
-            ViewData["MascotaId"] = new SelectList(_context.MascotaSet, "Id", "CodigoMascota", consulta.MascotaId);
-            ViewData["VeterinarioId"] = new SelectList(_context.VeterinarioSet, "Id", "Apellidos1", consulta.VeterinarioId);
+            ViewData["ClienteId"] = new SelectList(_context.ClienteSet, "Id", "Nombres", consulta.ClienteId);
+            ViewData["MascotaId"] = new SelectList(_context.MascotaSet, "Id", "Nombre", consulta.MascotaId);
+            ViewData["VeterinarioId"] = new SelectList(_context.VeterinarioSet, "Id", "Nombres", consulta.VeterinarioId);
             return View(consulta);
         }
 
@@ -88,15 +87,13 @@ namespace ClinicaVeterinaria.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClienteId"] = new SelectList(_context.ClienteSet, "Id", "Apellidos1", consulta.ClienteId);
-            ViewData["MascotaId"] = new SelectList(_context.MascotaSet, "Id", "CodigoMascota", consulta.MascotaId);
-            ViewData["VeterinarioId"] = new SelectList(_context.VeterinarioSet, "Id", "Apellidos1", consulta.VeterinarioId);
+            ViewData["ClienteId"] = new SelectList(_context.ClienteSet, "Id", "Nombres", consulta.ClienteId);
+            ViewData["MascotaId"] = new SelectList(_context.MascotaSet, "Id", "Nombre", consulta.MascotaId);
+            ViewData["VeterinarioId"] = new SelectList(_context.VeterinarioSet, "Id", "Nombres", consulta.VeterinarioId);
             return View(consulta);
         }
 
         // POST: Consultas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,CodigoConsulta,FechaConsulta,DescripcionConsulta,MascotaId,FechaCita,DescripcionCita,VeterinarioId,ClienteId")] Consulta consulta)
@@ -126,9 +123,9 @@ namespace ClinicaVeterinaria.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.ClienteSet, "Id", "Apellidos1", consulta.ClienteId);
-            ViewData["MascotaId"] = new SelectList(_context.MascotaSet, "Id", "CodigoMascota", consulta.MascotaId);
-            ViewData["VeterinarioId"] = new SelectList(_context.VeterinarioSet, "Id", "Apellidos1", consulta.VeterinarioId);
+            ViewData["ClienteId"] = new SelectList(_context.ClienteSet, "Id", "Nombres", consulta.ClienteId);
+            ViewData["MascotaId"] = new SelectList(_context.MascotaSet, "Id", "Nombre", consulta.MascotaId);
+            ViewData["VeterinarioId"] = new SelectList(_context.VeterinarioSet, "Id", "Nombres", consulta.VeterinarioId);
             return View(consulta);
         }
 

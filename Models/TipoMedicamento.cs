@@ -12,7 +12,7 @@ namespace ClinicaVeterinaria.Models
     {
         public TipoMedicamento()
         {
-            this.Medicamentos = new HashSet<Medicamentos>();
+            this.Medicamento = new HashSet<Medicamento>();
         }
 
         [Key]
@@ -28,6 +28,6 @@ namespace ClinicaVeterinaria.Models
         [StringLength(100, ErrorMessage = "El campo Descripción no puede tener más de 100 caracteres.")]
         public string Descripcion { get; set; }
 
-        public virtual ICollection<Medicamentos> Medicamentos { get; set; }
+        public virtual ICollection<Medicamento> Medicamento { get; set; }
     }
 }

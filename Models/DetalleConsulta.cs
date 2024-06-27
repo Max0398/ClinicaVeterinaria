@@ -29,6 +29,6 @@ namespace ClinicaVeterinaria.Models
         public int Cantidad { get; set; }
 
         public virtual Consulta? Consulta { get; set; }
-        public virtual Medicamentos? Medicamentos { get; set; }
+        public virtual Medicamento? Medicamento { get; set; }
     }
 }

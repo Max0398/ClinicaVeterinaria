@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ClinicaVeterinaria.Models.Medicamento>
+﻿@model IEnumerable<ClinicaVeterinaria.Models.TipoMedicamento>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,13 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.CodigoMedicamento)
+                @Html.DisplayNameFor(model => model.CodigoTipo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TipoMedicamento)
             </th>
             <th></th>
         </tr>
@@ -28,13 +25,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.CodigoMedicamento)
+                @Html.DisplayFor(modelItem => item.CodigoTipo)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TipoMedicamento.CodigoTipo)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
