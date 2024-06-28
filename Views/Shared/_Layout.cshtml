@@ -3,50 +3,72 @@
 @inject UserManager<IdentityUser> UserManager
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ClinicaVeterinaria</title>
+    <title>@ViewData["Title"] - ContratosOP1</title>
 
-    <!-- Estilos de Bootstrap y personalizados -->
+    <link rel="stylesheet" href="~/css/jqsimplemenu.css" />
+    <link rel="stylesheet" href="~/css/mdesplegable.css" />
+    <link rel="stylesheet" href="~/css/menu.css" />
+    <link rel="stylesheet" href="~/css/recuadros.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/ClinicaVeterinaria.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ContratosOP1.styles.css" asp-append-version="true" />
+
+    <style>
+        /* Estilo personalizado para el navbar */
+        .navbar-custom {
+            background-color: #007bff !important; /* Color azul con !important para prioridad */
+            border-bottom: 1px solid #ddd; /* Borde inferior gris claro */
+        }
+
+            .navbar-custom .navbar-brand,
+            .navbar-custom .navbar-nav .nav-link {
+                color: #fff; /* Color de texto blanco para la marca y los enlaces */
+            }
+
+            .navbar-custom .nav-link:hover {
+                color: #f8f9fa; /* Color de texto blanco más claro al pasar el mouse */
+            }
+
+            .navbar-custom .navbar-toggler-icon {
+                background-color: #fff; /* Color de fondo blanco para el icono del botón de alternancia */
+            }
+
+            .navbar-custom .dropdown-menu {
+                background-color: #007bff; /* Fondo azul para el menú desplegable */
+            }
+
+                .navbar-custom .dropdown-menu a {
+                    color: #fff !important; /* Color de texto blanco para los enlaces del menú desplegable con !important */
+                }
+
+                    .navbar-custom .dropdown-menu a:hover {
+                        background-color: #0056b3 !important; /* Color de fondo más oscuro al pasar el mouse sobre los enlaces con !important */
+                    }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ClinicaVeterinaria</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Menú de usuario -->
-                    @if (!SignInManager.IsSignedIn(User))
-                    {
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <partial name="_LoginPartial" />
-                            </li>
-                        </ul>
-                    }
-                    else
-                    {
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                @Html.Partial("menu")
-                            </li>
-                            <li class="nav-item">
-                                <partial name="_LoginPartial" />
-                            </li>
-                        </ul>
-                    }
-                </div>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light navbar-custom border-bottom box-shadow mb-3">
+
+            <div class="container">
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    @Html.Partial("menu")
+                    <partial name="_LoginPartial" />
+                }
+                else
+                {
+                    <partial name="_LoginPartial" />
+                }
+
             </div>
+
         </nav>
     </header>
 
@@ -58,7 +80,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; @DateTime.Now.Year - ClinicaVeterinaria - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - ContratosOP1 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
 

@@ -1,44 +1,177 @@
-body {
-    padding-top: 56px; /* Ajusta el padding-top para dejar espacio al navbar fijo */
+﻿/* N1 and N2 combined styles */
+.menu,
+.menu ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    position: relative;
+    line-height: 2.5em; /* Altura de línea para elementos de menú */
+    background-color: white; /* Color de fondo para el contenedor principal */
+    border-radius: 10px; /* Bordes redondeados para el contenedor principal */
 }
 
-.navbar-brand {
-    font-size: 1.5rem; /* Tama�o de fuente del logo */
-    font-weight: bold; /* Peso de la fuente */
+.menu a {
+    text-decoration: none;
+    color: #838383; /* Color de texto principal */
+    font-weight: bold;
 }
 
-.navbar-nav {
-    text-align: center; /* Centra los elementos del men� */
+.menu > li {
+    float: left;
+    margin-left: 15px; /* Margen izquierdo entre elementos del menú */
+}
+
+.menu > li:first-child {
+    margin-left: 0 !important; /* Eliminar margen izquierdo para el primer elemento del menú */
+}
+
+.menu > li > a {
+    padding: 0 10px; /* Espaciado interno de enlaces del menú */
     width: 100%;
+    text-decoration: none;
 }
 
-    .navbar-nav .nav-item {
-        margin-bottom: 5px; /* Espacio entre los elementos del men� */
-    }
-
-    .navbar-nav .nav-link {
-        padding: .5rem 1rem; /* Espaciado interno de los enlaces del men� */
-        color: rgba(255, 255, 255, 0.9); /* Color del texto */
-        transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out; /* Transici�n suave */
-    }
-
-        .navbar-nav .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.2); /* Color de fondo al pasar el mouse */
-            color: white; /* Color del texto al pasar el mouse */
-        }
-
-.dropdown-menu {
-    background-color: #343a40; /* Color de fondo del dropdown */
-    border: none; /* Sin borde */
+.menu a.selected,
+.menu-item-selected > a {
+    background-color: white; /* Color de fondo para elemento seleccionado */
+    border-radius: 10px; /* Bordes redondeados para el elemento seleccionado */
 }
 
-.dropdown-item {
-    color: white; /* Color del texto */
+.menu ul {
+    position: absolute;
+    display: none;
+    top: 2.5em; /* Posicionamiento vertical para submenús */
+    background-color: white; /* Color de fondo para submenús */
+    border-radius: 10px; /* Bordes redondeados para submenús */
 }
 
-    .dropdown-item:hover {
-        background-color: #495057; /* Color de fondo al pasar el mouse */
-        color: white; /* Color del texto al pasar el mouse */
-    }
+.menu li ul a {
+    width: 180px; /* Ancho fijo para enlaces de submenús */
+    color: black; /* Color de texto para enlaces de submenús */
+    padding: 0 10px; /* Espaciado interno para enlaces de submenús */
+}
 
+.menu li ul ul {
+    left: 198px; /* Posicionamiento lateral para submenús anidados */
+}
 
+.menu li.pull-down > a {
+    padding-right: 6px; /* Espaciado derecho para icono de flecha */
+    background-image: url('../images/darrow.png'); /* Icono de flecha para desplegar */
+    background-position: 96% 75%; /* Posición del icono de flecha */
+    background-repeat: no-repeat; /* No repetir el fondo del icono */
+}
+
+.menu li.right-menu > a {
+    background-image: url('../images/rarrow.png'); /* Icono de flecha para desplegar hacia la derecha */
+    background-position: 97% 45%; /* Posición del icono de flecha hacia la derecha */
+    background-repeat: no-repeat; /* No repetir el fondo del icono de flecha hacia la derecha */
+}
+
+/* N3 styles */
+.dl-menuwrapper {
+    width: 100%;
+    max-width: 300px; /* Ancho máximo para el contenedor del menú */
+    float: left;
+    position: relative;
+    perspective: 1000px; /* Efecto de perspectiva para animaciones 3D */
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    background-color: white; /* Color de fondo para el contenedor principal */
+    border-radius: 10px; /* Bordes redondeados para el contenedor principal */
+}
+
+.dl-menuwrapper button {
+    background: white; /* Color de fondo para el botón */
+    border: none;
+    width: 42px; /* Ancho del botón */
+    height: 47px; /* Altura del botón */
+    text-indent: -900em; /* Ocultar texto del botón fuera del área visible */
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+}
+
+.dl-menuwrapper button:hover,
+.dl-menuwrapper button.dl-active {
+    background: #b9e6e7; /* Color de fondo al pasar el ratón por encima o activado */
+}
+
+.dl-menuwrapper button:after {
+    content: ''; /* Contenido vacío para pseudo-elemento */
+    position: absolute;
+    width: 68%; /* Ancho de la línea para efecto de flecha */
+    height: 5px; /* Altura de la línea para efecto de flecha */
+    background: #fff; /* Color de la línea para efecto de flecha */
+    top: 10px; /* Posición superior para efecto de flecha */
+    left: 16%; /* Posición izquierda para efecto de flecha */
+    box-shadow: 0 10px 0 #fff, 0 20px 0 #fff; /* Sombra para efecto de flecha */
+}
+
+.dl-menuwrapper ul {
+    background: #75cdd2; /* Color de fondo para menú desplegable */
+    padding: 0;
+    list-style: none;
+    transform-style: preserve-3d; /* Conservar estilo 3D para transformaciones */
+}
+
+.dl-menuwrapper li {
+    position: relative;
+}
+
+.dl-menuwrapper li a {
+    display: block;
+    padding: 15px 20px; /* Espaciado interno para enlaces del menú desplegable */
+    font-size: 16px; /* Tamaño de fuente para enlaces del menú desplegable */
+    line-height: 20px; /* Altura de línea para enlaces del menú desplegable */
+    font-weight: 300; /* Peso de la fuente para enlaces del menú desplegable */
+    color: black; /* Color de texto para enlaces del menú desplegable */
+    outline: none;
+}
+
+.no-touch .dl-menuwrapper li a:hover {
+    color: #257E84 !important; /* Color de texto al pasar el ratón por encima */
+    background-color: black; /* Color de fondo al pasar el ratón por encima */
+    opacity: 0.5; /* Opacidad al pasar el ratón por encima */
+}
+
+.dl-menuwrapper li.dl-back > a {
+    padding-left: 30px; /* Espaciado izquierdo para enlace de retroceso */
+    background: rgba(0,0,0,0.1); /* Color de fondo para enlace de retroceso */
+}
+
+.dl-menuwrapper li > a:after {
+    content: "►"; /* Contenido para pseudo-elemento de flecha */
+    position: absolute;
+    top: 0;
+    right: 10px;
+    color: rgba(0,0,0,0.15); /* Color de texto para flecha */
+}
+
+.dl-menuwrapper .dl-menu {
+    margin: 5px 0 0 0;
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px); /* Transformación inicial para animación */
+    backface-visibility: hidden;
+}
+
+.dl-menuwrapper .dl-menu.dl-menu-toggle {
+    transition: all 0.3s ease; /* Transición para animación de menú */
+}
+
+.dl-menuwrapper .dl-menu.dl-menuopen {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0px); /* Transformación al abrir el menú */
+}
+
+.dl-menuwrapper > .dl-submenu {
+    position: absolute;
+    width: 100%;
+    top: 50px; /* Posición superior para submenú */
+    left: 0; /* Posición izquierda para submenú */
+    margin: 0;
+}
