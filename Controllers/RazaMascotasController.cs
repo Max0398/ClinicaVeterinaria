@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,8 +20,11 @@ namespace ClinicaVeterinaria.Controllers
         // GET: RazaMascotas
         public async Task<IActionResult> Index()
         {
-            var clinicaContainer = _context.RazaMascotasSet.Include(r => r.Mascota).Include(r => r.Raza);
-            return View(await clinicaContainer.ToListAsync());
+            var razaMascotas = await _context.RazaMascotasSet
+                .Include(r => r.Mascota)
+                .Include(r => r.Raza)
+                .ToListAsync();
+            return View(razaMascotas);
         }
 
         // GET: RazaMascotas/Details/5
@@ -55,8 +56,6 @@ namespace ClinicaVeterinaria.Controllers
         }
 
         // POST: RazaMascotas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,MascotaId,RazaId")] RazaMascotas razaMascotas)
@@ -91,8 +90,6 @@ namespace ClinicaVeterinaria.Controllers
         }
 
         // POST: RazaMascotas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,MascotaId,RazaId")] RazaMascotas razaMascotas)
@@ -156,9 +153,8 @@ namespace ClinicaVeterinaria.Controllers
             if (razaMascotas != null)
             {
                 _context.RazaMascotasSet.Remove(razaMascotas);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
