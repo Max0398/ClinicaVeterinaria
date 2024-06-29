@@ -20,10 +20,31 @@ namespace ClinicaVeterinaria.Controllers
         }
 
         // GET: EspecialidadesVeterinarios
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm)
         {
-            var clinicaContainer = _context.EspecialidadesVeterinariosSet.Include(e => e.Especialidad).Include(e => e.Veterinario);
-            return View(await clinicaContainer.ToListAsync());
+            // Query inicial sin filtros
+            var especialidadesQuery = _context.EspecialidadesVeterinariosSet
+                .Include(e => e.Especialidad)
+                .Include(e => e.Veterinario)
+                .AsQueryable();
+
+            // Aplicar filtro si se especifica un término de búsqueda
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                especialidadesQuery = especialidadesQuery.Where(e =>
+                    e.Veterinario.CodigoVeterinario.Contains(searchTerm) ||
+                    e.Veterinario.Nombres.Contains(searchTerm) ||
+                    e.Veterinario.Apellidos1.Contains(searchTerm) ||
+                    e.Veterinario.Apellidos2.Contains(searchTerm)
+                );
+            }
+
+            var especialidadesVeterinarios = await especialidadesQuery.ToListAsync();
+
+            // Preparar los datos para la vista
+            ViewData["SearchTerm"] = searchTerm;
+
+            return View(especialidadesVeterinarios);
         }
 
         // GET: EspecialidadesVeterinarios/Details/5
@@ -50,7 +71,7 @@ namespace ClinicaVeterinaria.Controllers
         public IActionResult Create()
         {
             ViewData["EspecialidadId"] = new SelectList(_context.EspecialidadSet, "id", "CodigoEspecialidad");
-            ViewData["VeterinarioId"] = new SelectList(_context.VeterinarioSet, "Id", "Apellidos1");
+            ViewData["VeterinarioId"] = new SelectList(_context.VeterinarioSet, "Id", "Nombres");
             return View();
         }
 
@@ -68,7 +89,7 @@ namespace ClinicaVeterinaria.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EspecialidadId"] = new SelectList(_context.EspecialidadSet, "id", "CodigoEspecialidad", especialidadesVeterinarios.EspecialidadId);
-            ViewData["VeterinarioId"] = new SelectList(_context.VeterinarioSet, "Id", "Apellidos1", especialidadesVeterinarios.VeterinarioId);
+            ViewData["VeterinarioId"] = new SelectList(_context.VeterinarioSet, "Id", "Nombres", especialidadesVeterinarios.VeterinarioId);
             return View(especialidadesVeterinarios);
         }
 
@@ -86,7 +107,7 @@ namespace ClinicaVeterinaria.Controllers
                 return NotFound();
             }
             ViewData["EspecialidadId"] = new SelectList(_context.EspecialidadSet, "id", "CodigoEspecialidad", especialidadesVeterinarios.EspecialidadId);
-            ViewData["VeterinarioId"] = new SelectList(_context.VeterinarioSet, "Id", "Apellidos1", especialidadesVeterinarios.VeterinarioId);
+            ViewData["VeterinarioId"] = new SelectList(_context.VeterinarioSet, "Id", "Nombres", especialidadesVeterinarios.VeterinarioId);
             return View(especialidadesVeterinarios);
         }
 
@@ -123,7 +144,7 @@ namespace ClinicaVeterinaria.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EspecialidadId"] = new SelectList(_context.EspecialidadSet, "id", "CodigoEspecialidad", especialidadesVeterinarios.EspecialidadId);
-            ViewData["VeterinarioId"] = new SelectList(_context.VeterinarioSet, "Id", "Apellidos1", especialidadesVeterinarios.VeterinarioId);
+            ViewData["VeterinarioId"] = new SelectList(_context.VeterinarioSet, "Id", "Nombres", especialidadesVeterinarios.VeterinarioId);
             return View(especialidadesVeterinarios);
         }
 
@@ -156,10 +177,27 @@ namespace ClinicaVeterinaria.Controllers
             if (especialidadesVeterinarios != null)
             {
                 _context.EspecialidadesVeterinariosSet.Remove(especialidadesVeterinarios);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        // GET: Razas/Search
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            ViewData["CurrentFilter"] = searchTerm;
+
+            IQueryable<EspecialidadesVeterinarios> query = _context.EspecialidadesVeterinariosSet
+                .Include(m => m.Especialidad)
+                .Include(m => m.Veterinario);
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(r => r.Especialidad.CodigoEspecialidad.Contains(searchTerm) || r.Veterinario.CodigoVeterinario.Contains(searchTerm));
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var veterinariosEspecialidades = await query.ToListAsync();
+
+            return View("Index", veterinariosEspecialidades);
         }
 
         private bool EspecialidadesVeterinariosExists(int id)

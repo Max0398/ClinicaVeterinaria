@@ -148,7 +148,22 @@ namespace ClinicaVeterinaria.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        // GET: Razas/Search
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            ViewData["CurrentFilter"] = searchTerm;
 
+            IQueryable<Especialidad> query = _context.EspecialidadSet;
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(r => r.CodigoEspecialidad.Contains(searchTerm));
+            }
+
+            var especialidad = await query.ToListAsync();
+
+            return View("Index", especialidad);
+        }
         private bool EspecialidadExists(int id)
         {
             return _context.EspecialidadSet.Any(e => e.id == id);

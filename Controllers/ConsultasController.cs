@@ -18,13 +18,37 @@ namespace ClinicaVeterinaria.Controllers
         }
 
         // GET: Consultas
+        [HttpGet("Consultas")]
         public async Task<IActionResult> Index()
         {
-            var clinicaContainer = _context.ConsultaSet
+            var consultas = await _context.ConsultaSet
                 .Include(c => c.Cliente)
                 .Include(c => c.Mascota)
-                .Include(c => c.Veterinario);
-            return View(await clinicaContainer.ToListAsync());
+                .Include(c => c.Veterinario)
+                .ToListAsync();
+
+            return View(consultas);
+        }
+
+        // GET: Consultas/Search
+        [HttpGet("Consultas/Search")]
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            var query = _context.ConsultaSet
+                .Include(c => c.Cliente)
+                .Include(c => c.Mascota)
+                .Include(c => c.Veterinario)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(c =>
+                    c.Cliente.Nombres.Contains(searchTerm) ||
+                    c.CodigoConsulta.ToString().Contains(searchTerm));
+            }
+
+            var consultas = await query.ToListAsync();
+            return View("Index", consultas); // Renderiza la vista Index con los resultados filtrados
         }
 
         // GET: Consultas/Details/5
@@ -40,6 +64,7 @@ namespace ClinicaVeterinaria.Controllers
                 .Include(c => c.Mascota)
                 .Include(c => c.Veterinario)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (consulta == null)
             {
                 return NotFound();
@@ -142,6 +167,7 @@ namespace ClinicaVeterinaria.Controllers
                 .Include(c => c.Mascota)
                 .Include(c => c.Veterinario)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (consulta == null)
             {
                 return NotFound();
@@ -159,9 +185,9 @@ namespace ClinicaVeterinaria.Controllers
             if (consulta != null)
             {
                 _context.ConsultaSet.Remove(consulta);
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

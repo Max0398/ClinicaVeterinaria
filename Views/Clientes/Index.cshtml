@@ -4,58 +4,75 @@
     ViewData["Title"] = "Clientes";
 }
 
-<h1>Listado Clientes</h1>
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h1 class="card-title" style="text-align:center;">Listado Clientes</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
-</p>
+        <form asp-action="Index" method="get" class="form-inline mb-3" style="padding-top: 15px;">
+            <div class="form-group mr-3" style="margin-top: 10px;">
+                <label for="searchTerm"  class="fw-bold">Buscar:</label>
+                <input type="text" name="searchTerm" class="form-control form-control-sm" style="width: 200px;" placeholder="Código o nombre" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm mr-3" style="margin-top: 10px;">Buscar</button>
+            <a asp-action="Index" class="btn btn-secondary btn-sm" style="margin-top: 10px;">Limpiar</a>
+        </form>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th style="white-space: nowrap;">@Html.DisplayNameFor(model => model.Nombres)</th>
-            <th>@Html.DisplayNameFor(model => model.Apellidos1)</th>
-            <th>@Html.DisplayNameFor(model => model.Apellidos2)</th>
-            <th>@Html.DisplayNameFor(model => model.Direccion)</th>
-            <th>@Html.DisplayNameFor(model => model.Telefono)</th>
-            <th>@Html.DisplayNameFor(model => model.Correo)</th>
-            <th>@Html.DisplayNameFor(model => model.N_Identificacion)</th>
-            <th>@Html.DisplayNameFor(model => model.CodigoCliente)</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr class="custom-table-row">
-                <td style="white-space: nowrap;">@Html.DisplayFor(modelItem => item.Nombres)</td>
-                <td>@Html.DisplayFor(modelItem => item.Apellidos1)</td>
-                <td>@Html.DisplayFor(modelItem => item.Apellidos2)</td>
-                <td>@Html.DisplayFor(modelItem => item.Direccion)</td>
-                <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
-                <td>@Html.DisplayFor(modelItem => item.Correo)</td>
-                <td>@Html.DisplayFor(modelItem => item.N_Identificacion)</td>
-                <td>@Html.DisplayFor(modelItem => item.CodigoCliente)</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <!-- Botón para Editar -->
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info" title="Editar">
-                            <i class="bi bi-pencil-square"></i> Editar
-                        </a>
-                        <!-- Botón para Detalles (Details) -->
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary" title="Detalles">
-                            <i class="bi bi-info-square"></i> Detalles
-                        </a>
-                        <!-- Botón para Eliminar -->
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" title="Eliminar">
-                            <i class="bi bi-trash"></i> Eliminar
-                        </a>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <p>
+            <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
+        </p>
+    </div>
+</div>
+
+<div class="card shadow-sm mt-3">
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col" style="max-width: 150px; white-space: normal;">@Html.DisplayNameFor(model => model.Nombres)</th>
+                    <th scope="col" style="max-width: 150px; white-space: normal;">@Html.DisplayNameFor(model => model.Apellidos1)</th>
+                    <th scope="col" style="max-width: 150px; white-space: normal;">@Html.DisplayNameFor(model => model.Apellidos2)</th>
+                    <th scope="col" style="max-width: 200px; white-space: normal;">@Html.DisplayNameFor(model => model.Direccion)</th>
+                    <th scope="col" style="max-width: 150px; white-space: normal;">@Html.DisplayNameFor(model => model.Telefono)</th>
+                    <th scope="col" style="max-width: 200px; white-space: normal;">@Html.DisplayNameFor(model => model.Correo)</th>
+                    <th scope="col" style="max-width: 150px; white-space: normal;">@Html.DisplayNameFor(model => model.N_Identificacion)</th>
+                    <th scope="col" style="max-width: 150px; white-space: normal;">@Html.DisplayNameFor(model => model.CodigoCliente)</th>
+                    <th scope="col" style="max-width: 150px; white-space: normal;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="table-primary">
+                        <th scope="row" style="white-space: nowrap;">@Html.DisplayFor(modelItem => item.Nombres)</th>
+                        <td>@Html.DisplayFor(modelItem => item.Apellidos1)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Apellidos2)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Direccion)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Telefono)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Correo)</td>
+                        <td>@Html.DisplayFor(modelItem => item.N_Identificacion)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CodigoCliente)</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <!-- Botón para Editar -->
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-sm mr-1" title="Editar">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+                                <!-- Botón para Detalles (Details) -->
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm mr-1" title="Detalles">
+                                    <i class="bi bi-info-square"></i> Detalles
+                                </a>
+                                <!-- Botón para Eliminar -->
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" title="Eliminar">
+                                    <i class="bi bi-trash"></i> Eliminar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 @section Scripts {
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

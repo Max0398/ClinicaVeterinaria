@@ -1,41 +1,70 @@
 ﻿@model IEnumerable<ClinicaVeterinaria.Models.Especie>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Especies";
 }
 
-<h1>Index</h1>
+<!-- Card para el formulario de búsqueda -->
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h1 class="card-title text-center">Listado de Especies</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CodigoEspecie)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CodigoEspecie)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+        <form asp-action="Search" asp-controller="Especies" method="get" class="form-inline mb-3" style="padding-top: 15px;">
+            <div class="form-group mr-3" style="margin-top: 10px;">
+                <label for="searchTerm" class="fw-bold">Buscar:</label>
+                <input type="text" name="searchTerm" class="form-control form-control-sm ml-2" style="width: 200px;" placeholder="Código o descripción" value="@ViewData["CurrentFilter"]" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm mr-3" style="margin-top: 10px;">Buscar</button>
+            <a asp-action="Index" class="btn btn-secondary btn-sm" style="margin-top: 10px;">Limpiar</a>
+        </form>
+
+        <p>
+            <a asp-action="Create" class="btn btn-primary">Crear Nueva Especie</a>
+        </p>
+    </div>
+</div>
+
+<!-- Card para la tabla de especies -->
+<div class="card shadow-sm mt-3">
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col" style="max-width: 150px; white-space: normal;">@Html.DisplayNameFor(model => model.CodigoEspecie)</th>
+                    <th scope="col" style="max-width: 150px; white-space: normal;">@Html.DisplayNameFor(model => model.Descripcion)</th>
+                    <th scope="col" style="max-width: 150px; white-space: normal;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="table-primary">
+                        <th scope="row" style="white-space: nowrap;">@Html.DisplayFor(modelItem => item.CodigoEspecie)</th>
+                        <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <!-- Botón para Editar -->
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info btn-sm mr-1" title="Editar">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+                                <!-- Botón para Detalles (Details) -->
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary btn-sm mr-1" title="Detalles">
+                                    <i class="bi bi-info-square"></i> Detalles
+                                </a>
+                                <!-- Botón para Eliminar -->
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm" title="Eliminar">
+                                    <i class="bi bi-trash"></i> Eliminar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap-icons/font/bootstrap-icons.js"></script>
 }
-    </tbody>
-</table>

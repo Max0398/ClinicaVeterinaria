@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,10 +18,19 @@ namespace ClinicaVeterinaria.Controllers
         }
 
         // GET: Mascotas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm)
         {
-            var clinicaContainer = _context.MascotaSet.Include(m => m.Especie);
-            return View(await clinicaContainer.ToListAsync());
+            ViewData["CurrentFilter"] = searchTerm;
+
+            var mascotas = from m in _context.MascotaSet.Include(m => m.Especie)
+                           select m;
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                mascotas = mascotas.Where(m => m.CodigoMascota.Contains(searchTerm) || m.Nombre.Contains(searchTerm));
+            }
+
+            return View(await mascotas.ToListAsync());
         }
 
         // GET: Mascotas/Details/5
@@ -150,9 +157,8 @@ namespace ClinicaVeterinaria.Controllers
             if (mascota != null)
             {
                 _context.MascotaSet.Remove(mascota);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

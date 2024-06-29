@@ -20,9 +20,18 @@ namespace ClinicaVeterinaria.Controllers
         }
 
         // GET: Clientes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm)
         {
-            return View(await _context.ClienteSet.ToListAsync());
+            var clientes = from c in _context.ClienteSet
+                           select c;
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                clientes = clientes.Where(s => s.Nombres.Contains(searchTerm) ||
+                                               s.CodigoCliente.Contains(searchTerm));
+            }
+
+            return View(await clientes.ToListAsync());
         }
 
         // GET: Clientes/Details/5
@@ -50,8 +59,6 @@ namespace ClinicaVeterinaria.Controllers
         }
 
         // POST: Clientes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nombres,Apellidos1,Apellidos2,Direccion,Telefono,Correo,N_Identificacion,CodigoCliente")] Cliente cliente)
@@ -82,8 +89,6 @@ namespace ClinicaVeterinaria.Controllers
         }
 
         // POST: Clientes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nombres,Apellidos1,Apellidos2,Direccion,Telefono,Correo,N_Identificacion,CodigoCliente")] Cliente cliente)

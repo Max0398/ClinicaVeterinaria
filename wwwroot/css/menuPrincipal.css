@@ -3,3 +3,48 @@
     border-radius: 20px; /* Bordes redondeados */
     padding: 10px 15px; /* Ajuste de espaciado interno */
 }
+body {
+   
+    background-image: url('\clinicaveterinaria\image\fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    z-index: 0;
+    opacity: 0.8;
+}
+
+
+/* Estilo personalizado para el navbar */
+.navbar-custom {
+    background-color: #007bff !important; /* Color azul con !important para prioridad */
+    border-bottom: 1px solid #ddd; /* Borde inferior gris claro */
+}
+
+.navbar-custom .navbar-brand,
+.navbar-custom .navbar-nav .nav-link {
+    color: #fff; /* Color de texto blanco para la marca y los enlaces */
+}
+
+.navbar-custom .nav-link:hover {
+    color: #f8f9fa; /* Color de texto blanco más claro al pasar el mouse */
+}
+
+.navbar-custom .navbar-toggler-icon {
+    background-color: #fff; /* Color de fondo blanco para el icono del botón de alternancia */
+}
+
+.navbar-custom .dropdown-menu {
+    background-color: #007bff; /* Fondo azul para el menú desplegable */
+}
+
+    .navbar-custom .dropdown-menu a {
+        color: #fff !important; /* Color de texto blanco para los enlaces del menú desplegable con !important */
+    }
+
+        .navbar-custom .dropdown-menu a:hover {
+            background-color: #0056b3 !important; /* Color de fondo más oscuro al pasar el mouse sobre los enlaces con !important */
+        }
+
+
+

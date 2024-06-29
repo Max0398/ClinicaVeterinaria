@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicaVeterinaria.Data;
 using ClinicaVeterinaria.Models;
@@ -20,9 +19,20 @@ namespace ClinicaVeterinaria.Controllers
         }
 
         // GET: Colores
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm)
         {
-            return View(await _context.ColoresSet.ToListAsync());
+            ViewData["CurrentFilter"] = searchTerm;
+
+            var colores = _context.ColoresSet.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                colores = colores.Where(c =>
+                    c.CodigoColor.Contains(searchTerm) ||
+                    c.Descripcion.Contains(searchTerm));
+            }
+
+            return View(await colores.ToListAsync());
         }
 
         // GET: Colores/Details/5
@@ -143,9 +153,8 @@ namespace ClinicaVeterinaria.Controllers
             if (colores != null)
             {
                 _context.ColoresSet.Remove(colores);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

@@ -149,6 +149,24 @@ namespace ClinicaVeterinaria.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: Especies/Search
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            ViewData["CurrentFilter"] = searchTerm;
+
+            IQueryable<Especie> query = _context.EspecieSet;
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(r => r.CodigoEspecie.Contains(searchTerm) || r.Descripcion.Contains(searchTerm));
+            }
+
+            var especies = await query.ToListAsync();
+
+            return View("Index",especies);
+        }
+
+
         private bool EspecieExists(int id)
         {
             return _context.EspecieSet.Any(e => e.Id == id);

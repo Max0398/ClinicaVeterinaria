@@ -148,7 +148,22 @@ namespace ClinicaVeterinaria.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        // GET: /Search
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            ViewData["CurrentFilter"] = searchTerm;
 
+            IQueryable<Veterinario> query = _context.VeterinarioSet;
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(r => r.CodigoVeterinario.Contains(searchTerm) || r.Nombres.Contains(searchTerm));
+            }
+
+            var veterinario = await query.ToListAsync();
+
+            return View("Index", veterinario);
+        }
         private bool VeterinarioExists(int id)
         {
             return _context.VeterinarioSet.Any(e => e.Id == id);

@@ -4,38 +4,43 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Listado Mascotas Colores</h1>
+<form asp-action="Search" asp-controller="MascotaColores" method="get" class="form-inline mb-3" style="padding-top: 15px;">
+    <div class="form-group mr-3" style="margin-top: 10px;">
+        <label for="searchTerm" class="fw-bold">Buscar:</label>
+        <input type="text" name="searchTerm" class="form-control form-control-sm" style="width: 200px;" placeholder="Código de Mascota" value="@ViewData["CurrentFilter"]" />
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm mr-3" style="margin-top: 10px;">Buscar</button>
+    <a asp-action="Index" class="btn btn-secondary btn-sm" style="margin-top: 10px;">Limpiar</a>
+</form>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Mascota)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Colores)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Mascota.CodigoMascota)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Colores.CodigoColor)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Mascota.CodigoMascota)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Colores.CodigoColor)</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Mascota.CodigoMascota)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Colores.CodigoColor)</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Detalles</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Eliminar</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

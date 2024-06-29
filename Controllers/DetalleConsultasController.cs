@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,10 +18,22 @@ namespace ClinicaVeterinaria.Controllers
         }
 
         // GET: DetalleConsultas
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchTerm)
         {
-            var clinicaContainer = _context.DetalleConsultaSet.Include(d => d.Consulta).Include(d => d.Medicamento);
-            return View(await clinicaContainer.ToListAsync());
+            ViewData["CurrentFilter"] = searchTerm;
+
+            var detalleConsultas = _context.DetalleConsultaSet
+                .Include(d => d.Consulta)
+                .Include(d => d.Medicamento)
+                .AsQueryable(); // Permite construir dinámicamente la consulta
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                detalleConsultas = detalleConsultas.Where(d =>
+                    d.Consulta.CodigoConsulta.Contains(searchTerm)); // Filtra por código de consulta
+            }
+
+            return View(await detalleConsultas.ToListAsync());
         }
 
         // GET: DetalleConsultas/Details/5
@@ -38,6 +48,7 @@ namespace ClinicaVeterinaria.Controllers
                 .Include(d => d.Consulta)
                 .Include(d => d.Medicamento)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (detalleConsulta == null)
             {
                 return NotFound();
@@ -84,12 +95,8 @@ namespace ClinicaVeterinaria.Controllers
                 return NotFound();
             }
 
-            // Configurar ConsultaId con SelectList
             ViewBag.ConsultaId = new SelectList(_context.ConsultaSet, "Id", "CodigoConsulta", detalleConsulta.ConsultaId);
-
-            // Configurar MedicamentoId con SelectList
             ViewBag.MedicamentoId = new SelectList(_context.MedicamentoSet, "Id", "CodigoMedicamento", detalleConsulta.MedicamentoId);
-
             return View(detalleConsulta);
         }
 
@@ -124,10 +131,8 @@ namespace ClinicaVeterinaria.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            // Si el modelo no es válido, volver a configurar los SelectList
             ViewBag.ConsultaId = new SelectList(_context.ConsultaSet, "Id", "CodigoConsulta", detalleConsulta.ConsultaId);
             ViewBag.MedicamentoId = new SelectList(_context.MedicamentoSet, "Id", "CodigoMedicamento", detalleConsulta.MedicamentoId);
-
             return View(detalleConsulta);
         }
 
@@ -160,9 +165,8 @@ namespace ClinicaVeterinaria.Controllers
             if (detalleConsulta != null)
             {
                 _context.DetalleConsultaSet.Remove(detalleConsulta);
+                await _context.SaveChangesAsync();
             }
-
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

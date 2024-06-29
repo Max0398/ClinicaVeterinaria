@@ -4,46 +4,63 @@
     ViewData["Title"] = "Listado de Colores";
 }
 
-<h1>Listado de Colores</h1>
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h1 class="card-title" style="text-align:center;">Listado de Colores</h1>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
-</p>
+        <form asp-action="Index" method="get" class="form-inline mb-3">
+            <div class="form-group mr-3">
+                <label for="searchTerm" class="fw-bold">Buscar:</label>
+                <input type="text" name="searchTerm" class="form-control form-control-sm" style="width: 200px;" placeholder="Código o descripción" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm mr-3" style="margin-top: 10px;">Buscar</button>
+            <a asp-action="Index" class="btn btn-secondary btn-sm" style="margin-top: 10px;">Limpiar</a>
+        </form>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.CodigoColor)</th>
-            <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr class="custom-table-row">
-                <td>@Html.DisplayFor(modelItem => item.CodigoColor)</td>
-                <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <!-- Botón para Editar -->
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info" title="Editar">
-                            <i class="bi bi-pencil-square"></i> Editar
-                        </a>
-                        <!-- Botón para Detalles (Details) -->
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary" title="Detalles">
-                            <i class="bi bi-info-square"></i> Detalles
-                        </a>
-                        <!-- Botón para Eliminar -->
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" title="Eliminar">
-                            <i class="bi bi-trash"></i> Eliminar
-                        </a>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <p>
+            <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
+        </p>
+    </div>
+</div>
+
+<div class="card shadow-sm mt-3">
+    <div class="card-body">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.CodigoColor)</th>
+                    <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr class="table-primary">
+                        <td>@Html.DisplayFor(modelItem => item.CodigoColor)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Descripcion)</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <!-- Botón para Editar -->
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info" title="Editar">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+                                <!-- Botón para Detalles (Details) -->
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-secondary" title="Detalles">
+                                    <i class="bi bi-info-square"></i> Detalles
+                                </a>
+                                <!-- Botón para Eliminar -->
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" title="Eliminar">
+                                    <i class="bi bi-trash"></i> Eliminar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 @section Scripts {
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

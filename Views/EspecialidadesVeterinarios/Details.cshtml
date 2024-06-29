@@ -20,8 +20,15 @@
             @Html.DisplayNameFor(model => model.Veterinario)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Veterinario.Apellidos1)
+            @Html.DisplayFor(model => model.Veterinario.Nombres)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Veterinario.CodigoVeterinario)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Veterinario.CodigoVeterinario)
+        </dd>
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Especialidad)
         </dt>

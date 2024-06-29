@@ -22,8 +22,10 @@ namespace ClinicaVeterinaria.Controllers
         // GET: Medicamentos
         public async Task<IActionResult> Index()
         {
-            var clinicaContainer = _context.MedicamentoSet.Include(m => m.TipoMedicamento);
-            return View(await clinicaContainer.ToListAsync());
+            var medicamentos = await _context.MedicamentoSet
+                .Include(m => m.TipoMedicamento)
+                .ToListAsync();
+            return View(medicamentos);
         }
 
         // GET: Medicamentos/Details/5
@@ -37,6 +39,7 @@ namespace ClinicaVeterinaria.Controllers
             var medicamento = await _context.MedicamentoSet
                 .Include(m => m.TipoMedicamento)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (medicamento == null)
             {
                 return NotFound();
@@ -48,13 +51,11 @@ namespace ClinicaVeterinaria.Controllers
         // GET: Medicamentos/Create
         public IActionResult Create()
         {
-            ViewData["TipoMedicamentoId"] = new SelectList(_context.TipoMedicamentoet, "Id", "CodigoTipo");
+            ViewData["TipoMedicamentoId"] = new SelectList(_context.TipoMedicamentoSet, "Id", "CodigoTipo");
             return View();
         }
 
         // POST: Medicamentos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CodigoMedicamento,Descripcion,TipoMedicamentoId")] Medicamento medicamento)
@@ -65,7 +66,7 @@ namespace ClinicaVeterinaria.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoMedicamentoId"] = new SelectList(_context.TipoMedicamentoet, "Id", "CodigoTipo", medicamento.TipoMedicamentoId);
+            ViewData["TipoMedicamentoId"] = new SelectList(_context.TipoMedicamentoSet, "Id", "CodigoTipo", medicamento.TipoMedicamentoId);
             return View(medicamento);
         }
 
@@ -82,13 +83,12 @@ namespace ClinicaVeterinaria.Controllers
             {
                 return NotFound();
             }
-            ViewData["TipoMedicamentoId"] = new SelectList(_context.TipoMedicamentoet, "Id", "CodigoTipo", medicamento.TipoMedicamentoId);
+
+            ViewData["TipoMedicamentoId"] = new SelectList(_context.TipoMedicamentoSet, "Id", "CodigoTipo", medicamento.TipoMedicamentoId);
             return View(medicamento);
         }
 
         // POST: Medicamentos/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,CodigoMedicamento,Descripcion,TipoMedicamentoId")] Medicamento medicamento)
@@ -118,7 +118,7 @@ namespace ClinicaVeterinaria.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoMedicamentoId"] = new SelectList(_context.TipoMedicamentoet, "Id", "CodigoTipo", medicamento.TipoMedicamentoId);
+            ViewData["TipoMedicamentoId"] = new SelectList(_context.TipoMedicamentoSet, "Id", "CodigoTipo", medicamento.TipoMedicamentoId);
             return View(medicamento);
         }
 
@@ -150,10 +150,26 @@ namespace ClinicaVeterinaria.Controllers
             if (medicamento != null)
             {
                 _context.MedicamentoSet.Remove(medicamento);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: /Search
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            ViewData["CurrentFilter"] = searchTerm;
+
+            IQueryable<Medicamento> query = _context.MedicamentoSet;
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(r => r.CodigoMedicamento.Contains(searchTerm) );
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var medicamento = await query.ToListAsync();
+
+            return View("Index", medicamento);
         }
 
         private bool MedicamentoExists(int id)

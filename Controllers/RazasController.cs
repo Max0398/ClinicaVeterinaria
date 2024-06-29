@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClinicaVeterinaria.Data;
 using ClinicaVeterinaria.Models;
@@ -22,7 +19,8 @@ namespace ClinicaVeterinaria.Controllers
         // GET: Razas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.RazaSet.ToListAsync());
+            var razas = await _context.RazaSet.ToListAsync();
+            return View(razas);
         }
 
         // GET: Razas/Details/5
@@ -143,10 +141,26 @@ namespace ClinicaVeterinaria.Controllers
             if (raza != null)
             {
                 _context.RazaSet.Remove(raza);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Razas/Search
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            ViewData["CurrentFilter"] = searchTerm;
+
+            IQueryable<Raza> query = _context.RazaSet;
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(r => r.CodigoRaza.Contains(searchTerm) || r.Descripcion.Contains(searchTerm));
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var razas = await query.ToListAsync();
+
+            return View("Index", razas);
         }
 
         private bool RazaExists(int id)

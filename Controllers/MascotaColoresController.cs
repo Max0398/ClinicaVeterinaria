@@ -162,6 +162,25 @@ namespace ClinicaVeterinaria.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            ViewData["CurrentFilter"] = searchTerm;
+
+            IQueryable<MascotaColores> query = _context.MascotaColoresSet
+                .Include(m => m.Colores)
+                .Include(m => m.Mascota);
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(r => r.Mascota.CodigoMascota.Contains(searchTerm));
+            }
+
+            var mascotaColores = await query.ToListAsync();
+
+            return View("Index", mascotaColores);
+        }
+
+
         private bool MascotaColoresExists(int id)
         {
             return _context.MascotaColoresSet.Any(e => e.Id == id);

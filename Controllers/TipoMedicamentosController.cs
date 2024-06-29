@@ -22,7 +22,7 @@ namespace ClinicaVeterinaria.Controllers
         // GET: TipoMedicamentos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TipoMedicamentoet.ToListAsync());
+            return View(await _context.TipoMedicamentoSet.ToListAsync());
         }
 
         // GET: TipoMedicamentos/Details/5
@@ -33,7 +33,7 @@ namespace ClinicaVeterinaria.Controllers
                 return NotFound();
             }
 
-            var tipoMedicamento = await _context.TipoMedicamentoet
+            var tipoMedicamento = await _context.TipoMedicamentoSet
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tipoMedicamento == null)
             {
@@ -73,7 +73,7 @@ namespace ClinicaVeterinaria.Controllers
                 return NotFound();
             }
 
-            var tipoMedicamento = await _context.TipoMedicamentoet.FindAsync(id);
+            var tipoMedicamento = await _context.TipoMedicamentoSet.FindAsync(id);
             if (tipoMedicamento == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace ClinicaVeterinaria.Controllers
                 return NotFound();
             }
 
-            var tipoMedicamento = await _context.TipoMedicamentoet
+            var tipoMedicamento = await _context.TipoMedicamentoSet
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tipoMedicamento == null)
             {
@@ -139,19 +139,35 @@ namespace ClinicaVeterinaria.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tipoMedicamento = await _context.TipoMedicamentoet.FindAsync(id);
+            var tipoMedicamento = await _context.TipoMedicamentoSet.FindAsync(id);
             if (tipoMedicamento != null)
             {
-                _context.TipoMedicamentoet.Remove(tipoMedicamento);
+                _context.TipoMedicamentoSet.Remove(tipoMedicamento);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        // GET: /Search
+        public async Task<IActionResult> Search(string searchTerm)
+        {
+            ViewData["CurrentFilter"] = searchTerm;
+
+            IQueryable<TipoMedicamento> query = _context.TipoMedicamentoSet;
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(r => r.CodigoTipo.Contains(searchTerm) || r.Descripcion.Contains(searchTerm));
+            }
+
+            var tipoMedicamento = await query.ToListAsync();
+
+            return View("Index", tipoMedicamento);
+        }
 
         private bool TipoMedicamentoExists(int id)
         {
-            return _context.TipoMedicamentoet.Any(e => e.Id == id);
+            return _context.TipoMedicamentoSet.Any(e => e.Id == id);
         }
     }
 }
